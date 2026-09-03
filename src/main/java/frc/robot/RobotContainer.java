@@ -4,19 +4,32 @@
 
 package frc.robot;
 
-import com.sbdc.loggerhead.LogMode;
-import com.sbdc.loggerhead.Loggerhead;
+import com.sbdc.loggerhead.logging.LogMode;
+import com.sbdc.loggerhead.logging.Loggerhead;
+import com.sbdc.loggerhead.logging.compoundlogger.LogSubsystemCommands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.BallShooterCommands;
+import frc.robot.constants.GeneralConstants;
+import frc.robot.controller.BallShooterController;
+import frc.robot.controller.BallShooterPS4Controller;
+import frc.robot.controller.BallShooterXboxController;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Kicker;
 
 public class RobotContainer {
   private final Flywheel flywheel = new Flywheel();
+  private final Kicker kicker = new Kicker();
 
-  private final CommandXboxController m_driverController = new CommandXboxController(0);
+  private final BallShooterController m_driverController;
 
   public RobotContainer() {
+    if (GeneralConstants.usePlaystationController) {
+      m_driverController = new BallShooterPS4Controller(0);
+    } else {
+      m_driverController = new BallShooterXboxController(0);
+    }
+
     // Configure the trigger bindings
     configureBindings();
     Loggerhead.getInstance().getConfigurator().setConfigureCallback(this::configureLogging);
@@ -28,18 +41,25 @@ public class RobotContainer {
   }
 
   public void configureLogging() {
+    LogMode logMode = LogMode.NetworkOnly;
+
+    // spotless:off
     Loggerhead.getInstance()
         .getRootTable()
-        .getSubTable("Flywheel")
-        .addLoggable(flywheel, LogMode.Both);
+          .getSubTable("Flywheel")
+            .addLoggable(flywheel, logMode)
+            .addCompoundLogger(new LogSubsystemCommands("Commands", logMode, flywheel))
+        .getParent()
+          .getSubTable("Kicker")
+            .addLoggable(kicker, logMode)
+            .addCompoundLogger(new LogSubsystemCommands("Commands", logMode, kicker));
     ;
+    // spotless:on
   }
 
   private void configureBindings() {
-    m_driverController
-        .b()
-        .whileTrue(
-            Commands.runEnd(() -> flywheel.setSpeed(200), () -> flywheel.setDuty(0), flywheel));
+    m_driverController.intakeButton().onTrue(BallShooterCommands.intakeCommand(kicker));
+    m_driverController.shootButton().onTrue(BallShooterCommands.shootCommand(kicker, flywheel));
   }
 
   /**
