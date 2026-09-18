@@ -12,17 +12,17 @@ import com.sbdc.loggerhead.util.LightSubsystem;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Robot;
 import frc.robot.constants.KickerConstants;
 
 public class Kicker extends LightSubsystem implements Loggable {
-  private TalonSRX rawMotor = new WPI_TalonSRX(KickerConstants.kickerMotorCanID);
+  // Step B.2
+  private TalonSRX rawMotor = new WPI_TalonSRX(-1);
+  private final DigitalInput beamBreak = new DigitalInput(-1);
 
-  private final DigitalInput beamBreak = new DigitalInput(KickerConstants.beamBreakPort);
   private DIOSim beamBreakSim;
 
-  public final Trigger ballPresent = new Trigger(beamBreak::get);
+  // Step D.1
 
   public Kicker() {
     TalonSRXConfiguration motorConfig = new TalonSRXConfiguration();

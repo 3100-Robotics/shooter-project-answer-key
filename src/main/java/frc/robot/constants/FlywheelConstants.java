@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public interface FlywheelConstants {
-  int flywheelMotorCanID = 50;
+  // Step A.1
+  int flywheelMotorCanID = -1;
 
+  // Point Z.1
   int peakCurrentLimit = 40;
   int peakCurrentDuration = 100;
   int continuousCurrentLimit = 40;
