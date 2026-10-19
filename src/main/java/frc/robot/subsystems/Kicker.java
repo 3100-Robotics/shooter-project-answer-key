@@ -18,7 +18,7 @@ import frc.robot.constants.KickerConstants;
 
 public class Kicker extends LightSubsystem implements Loggable {
   // Step B.2
-  private TalonSRX rawMotor = new WPI_TalonSRX(KickerConstants.kickerMotorCanID);
+  private TalonSRX rawMotor = new WPI_TalonSRX(-1);
   private final DigitalInput beamBreak = new DigitalInput(-1);
 
   private DIOSim beamBreakSim;
