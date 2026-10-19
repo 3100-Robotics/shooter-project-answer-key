@@ -8,7 +8,7 @@ public interface KickerConstants {
   int kickerMotorCanID = -1;
   int beamBreakPort = -1;
 
-  // Step Z.2
+  // Point Z.2
   int peakCurrentLimit = 40;
   int peakCurrentDuration = 100;
   int continuousCurrentLimit = 40;
