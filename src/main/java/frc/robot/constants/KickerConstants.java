@@ -5,8 +5,8 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public interface KickerConstants {
   // Step A.2
-  int kickerMotorCanID = -1;
-  int beamBreakPort = -1;
+  int kickerMotorCanID = 1;
+  int beamBreakPort = 4;
 
   // Step Z.2
   int peakCurrentLimit = 40;

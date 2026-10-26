@@ -13,7 +13,7 @@ import frc.robot.constants.FlywheelConstants;
 
 public class Flywheel extends LightSubsystem implements Loggable {
   // Step B.1
-  private TalonSRX rawMotor = new WPI_TalonSRX(-1);
+  private TalonSRX rawMotor = new WPI_TalonSRX(FlywheelConstants.flywheelMotorCanID);
 
   public Flywheel() {
     rawMotor.configFactoryDefault();

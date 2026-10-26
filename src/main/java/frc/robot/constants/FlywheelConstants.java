@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 public interface FlywheelConstants {
   // Step A.1
-  int flywheelMotorCanID = -1;
+  int flywheelMotorCanID = 61;
 
   // Point Z.1
   int peakCurrentLimit = 40;
